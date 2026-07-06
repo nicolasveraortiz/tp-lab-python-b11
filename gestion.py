@@ -2,17 +2,22 @@ from datetime import datetime
 import math
 from validaciones import *
 
-CAPACIDAD = 10
+# constantes
+CAPACIDAD = 10 
+TARIFA_POR_HORA = 1500.0
+
+# variables
 estacionamiento = {}
 for i in range(1, CAPACIDAD + 1): # nuestra variable para almacenar los vehiculos es un diccionario.
     estacionamiento[i] = None
 
 metricas = {
     "total_atendidos": 0,
-    "tiempo_total_permanencia": 0
+    "tiempo_total_permanencia": 0,
+    "acumulador_ganancias": 0
 }
 
-TARIFA_POR_HORA = 1500.0
+
 
 def ingresar_vehiculo():
     libres = 0
@@ -66,7 +71,7 @@ def egresar_vehiculo():
         
     horas_a_cobrar = math.ceil(minutos / 60)
     importe = horas_a_cobrar * TARIFA_POR_HORA
-    
+    metricas["acumulador_ganancias"] += importe
     metricas["total_atendidos"] += 1
     metricas["tiempo_total_permanencia"] += minutos
     
@@ -81,9 +86,36 @@ def egresar_vehiculo():
     print(f"Total a Abonar   : ${importe:.2f}")
     print("-"*35)
 
-def buscar_patente(patente):
-    print("en desarrollo!!!")
+def buscar_patente():
+    print("\n" + "="*35)
+    print("      VEHÍCULOS ESTACIONADOS     ")
+    print("="*35)
+    
+    hay_ocupados = False
+    for i in range(1, CAPACIDAD + 1):
+        if estacionamiento[i] is not None:
+            datos = estacionamiento[i]
+            print(f"Estacionamiento N° {i} -> Patente: {datos['patente']}")
+            hay_ocupados = True
+            
+    if not hay_ocupados:
+        print("No hay vehículos registrados en este momento.")
+    print("="*35)
 
 def verificar_disp():
-    print("en desarrollo!!!!")
+    libres = 0
+    ocupados = 0
+    for cochera in estacionamiento:
+        if estacionamiento[cochera] is None:
+            libres += 1
+        else:
+            ocupados += 1
+            
+    print("\n" + "="*35)
+    print("    ESTADO DE DISPONIBILIDAD    ")
+    print("="*35)
+    print(f" Cocheras Libres   : {libres}")
+    print(f" Cocheras Ocupadas : {ocupados}")
+    print(f" Capacidad Total   : {CAPACIDAD}")
+    print("="*35)
     
