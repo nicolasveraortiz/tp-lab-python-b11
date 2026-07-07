@@ -13,7 +13,7 @@ def mostrar_stats():
         atendidos_anteriores = int(linea1)
         ganancias_anteriores = float(linea2)
         tiempo_anterior = int(linea3)
-    except FileNotFoundError:
+    except (FileNotFoundError, ValueError):
         atendidos_anteriores = 0
         ganancias_anteriores = 0.0
         tiempo_anterior = 0
