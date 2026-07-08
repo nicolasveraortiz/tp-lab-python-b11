@@ -168,3 +168,42 @@ def vaciar_estacionamiento():
         if datos is not None:
             patente = datos["patente"]
             egresar_vehiculo(patente)
+
+def modificar_tipo_vehiculo():
+    patente = leer_patente("Ingrese la patente del vehículo a modificar: ")
+
+    cochera_encontrada = None
+    for cochera in estacionamiento:
+        datos = estacionamiento[cochera]
+        if datos is not None and datos["patente"] == patente:
+            cochera_encontrada = cochera
+            break
+
+    if cochera_encontrada is None:
+        print(f"\nError: No se encontró ningún vehículo registrado con la patente {patente}.")
+        return
+
+    tipo_actual = estacionamiento[cochera_encontrada]["tipo"]
+    print(f"\nEl vehículo con patente {patente} está registrado como: {tipo_actual}")
+
+    tipo_nuevo = ""
+    while tipo_nuevo == "":
+        try:
+            opcion_tipo = int(input("Ingrese el tipo correcto: \n"
+                                    "1. Moto\n"
+                                    "2. Auto\n"
+                                    "3. Camioneta\n"
+                                    "Seleccione una opción (1-3): "))
+            if opcion_tipo == 1:
+                tipo_nuevo = "Moto"
+            elif opcion_tipo == 2:
+                tipo_nuevo = "Auto"
+            elif opcion_tipo == 3:
+                tipo_nuevo = "Camioneta"
+            else:
+                print("Error: Tipo de vehiculo invalido. Intente nuevamente.\n")
+        except ValueError:
+            print("Error: Debe ingresar un número entero válido.\n")
+
+    estacionamiento[cochera_encontrada]["tipo"] = tipo_nuevo
+    print(f"\n¡Listo! El tipo de vehículo se actualizó de '{tipo_actual}' a '{tipo_nuevo}'.")

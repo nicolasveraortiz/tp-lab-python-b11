@@ -5,18 +5,19 @@ from validaciones import *
 acciones = {1: ingresar_vehiculo,
            2: opcion_egresar,
            3: verificar_disp,
-           4: mostrar_stats
+           4: mostrar_stats,
+           5: modificar_tipo_vehiculo
            }
            
 opcion = None
 while True:
     try:
         opcion = int(input("Menu de opciones: \n1. Ingresar vehiculo \n2. Egresar vehiculo " \
-        "\n3. Verificar disponibilidad \n4. Revisar estadísticas \n0. Cerrar el programa \nIngrese un número para avanzar: "))
-        if opcion not in range(0,5):
+        "\n3. Verificar disponibilidad \n4. Revisar estadísticas \n5. Modificar tipo de vehículo \n0. Cerrar el programa \nIngrese un número para avanzar: "))
+        if opcion not in range(0,6):
             raise ValueError
     except ValueError:
-        print("Error: Debes ingresar un número del 0 al 4 para avanzar")
+        print("Error: Debes ingresar un número del 0 al 5 para avanzar")
     if opcion in acciones:
         acciones[opcion]()
 
