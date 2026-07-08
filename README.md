@@ -16,7 +16,7 @@ Este sistema fue desarrollado en Python para ejecutarse exclusivamente a través
 El software se encuentra estructurado bajo un esquema de modularización básica para separar las responsabilidades del sistema:
 * `main.py`: Punto de entrada de la aplicación. Aloja el bucle principal de control y la interfaz de usuario en consola.
 * `gestion.py`: Contiene la lógica del negocio, incluyendo las funciones de ingreso, egreso, asignación de cocheras y cálculo de tarifas.
-* `validaciones.py`: Concentra las funciones de control de tipos de datos, sanitización de inputs y manejo de errores para evitar fallas críticas en la ejecución.
+* `validaciones.py`: Concentra las funciones de control de tipos de datos.
 * `estadisticas.py`: Módulo encargado de procesar los datos históricos y actuales mediante acumuladores y contadores para mostrar reportes analíticos.
 
 ## Instrucciones de uso
@@ -27,6 +27,13 @@ El programa consta de las siguientes funciones, enumeradas según el número que
 2. Egresar vehiculo: Pide la patente del vehiculo que egresa del estacionamiento.
 3. Buscar patente: Despliega la lista de patentes en los diversos espacios de estacionamientos.
 4. Verificar disponibilidad: Muestra los espacios disponibles y los espacios ocupados.
-5. Revisar estadísticas: Muestra el actual documento de estadísticas. Si está vacío, se le avisará al usuario que aún no hay estadísticas
-0. Cerrar el programa: Prepara el programa para su cierre. Se limpian todas las variables.
+5. Revisar estadísticas: Muestra el actual documento de estadísticas.
+"0". Cerrar el programa: Prepara el programa para su cierre. Se limpian todas las variables.
+
+El programa no necesita la instalación de ninguna libreria externa.
+
+## Uso de Inteligencia Artificial
+Para el desarrollo de este trabajo, hemos utilizado Gemini. Se utilizó principalmente para comprender por qué el código no funcionaba. En multiples ocasiones, el código no funcionaba como esperabamos por detalles menores. 
+Otro punto donde utilizamos la IA fue en la comprensión del uso de la libreria "math" para manipular los datos de las tarifas aplicadas en el programa.
+Para el uso de la IA, hemos enviado nuestra consulta o función problemática y le preguntamos al agente por qué la consola nos devolvía tal error (por ejemplo, un loop infinito, un error especificado en tal línea, etc.).  
 

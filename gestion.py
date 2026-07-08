@@ -4,7 +4,6 @@ from validaciones import *
 
 # constantes
 CAPACIDAD = 10 
-TARIFA_POR_HORA = 1500.0
 TARIFA_MOTO = 1000.0
 TARIFA_AUTO = 1500.0 
 TARIFA_CAMIONETA = 2000.0
@@ -39,10 +38,23 @@ def ingresar_vehiculo():
             return
             
     tipo = ""
-    while tipo not in ["MOTO", "AUTO", "CAMIONETA"]:
-        tipo = input("Ingrese tipo de vehiculo (MOTO / AUTO / CAMIONETA): "). strip()
-        if tipo not in ["MOTO", "AUTO", "CAMIONETA"]:
-            print("Error: Tipo de vehiculo invalido. Intente nuevamente.")
+    while tipo == "":
+        try:
+            opcion_tipo = int(input("Ingrese tipo de vehiculo: \n"
+                                    f"1. Moto (${TARIFA_MOTO} por hora)\n"
+                                    f"2. Auto (${TARIFA_AUTO} por hora)\n"
+                                    f"3. Camioneta (${TARIFA_CAMIONETA} por hora)\n"
+                                    "Seleccione una opción (1-3): "))
+            if opcion_tipo == 1:
+                tipo = "Moto"
+            elif opcion_tipo == 2:
+                tipo = "Auto"
+            elif opcion_tipo == 3:
+                tipo = "Camioneta"
+            else:
+                print("Error: Tipo de vehiculo invalido. Intente nuevamente.\n")
+        except ValueError:
+            print("Error: Debe ingresar un número entero válido.\n")
 
     for cochera in estacionamiento:
         if estacionamiento[cochera] is None:
@@ -82,9 +94,9 @@ def egresar_vehiculo(patente):
     horas_a_cobrar = math.ceil(minutos / 60)
 
     tipo_vehiculo = datos["tipo"]
-    if tipo_vehiculo == "MOTO": 
+    if tipo_vehiculo == "Moto": 
         tarifa_aplicada = TARIFA_MOTO
-    elif tipo_vehiculo == "AUTO":
+    elif tipo_vehiculo == "Auto":
         tarifa_aplicada = TARIFA_AUTO
     else: 
         tarifa_aplicada = TARIFA_CAMIONETA 
@@ -109,7 +121,7 @@ def opcion_egresar():
     patente = leer_patente("Ingrese la patente del vehículo que egresa: ")
     egresar_vehiculo(patente)
 
-def buscar_patente():
+def mostrar_estacionamientos():
     print("\n" + "="*35)
     print("      VEHÍCULOS ESTACIONADOS     ")
     print("="*35)
@@ -118,7 +130,7 @@ def buscar_patente():
     for i in range(1, CAPACIDAD + 1):
         if estacionamiento[i] is not None:
             datos = estacionamiento[i]
-            print(f"Estacionamiento N° {i} -> Patente: {datos['patente']}")
+            print(f"Estacionamiento N° {i} - Patente: {datos['patente']} - Tipo de vehículo: {datos["tipo"]}")
             hay_ocupados = True
             
     if not hay_ocupados:
@@ -141,15 +153,12 @@ def verificar_disp():
     print(f" Cocheras Ocupadas : {ocupados}")
     print(f" Capacidad Total   : {CAPACIDAD}")
     print("="*35)
+    mostrar_estacionamientos()
 
 def vaciar_estacionamiento():
-    # Recorremos las llaves (números de cochera) del diccionario
     for cochera in estacionamiento:
         datos = estacionamiento[cochera]
         
-        # Primero verificamos si hay un auto adentro (si no es None)
         if datos is not None:
-            # Extraemos la patente accediendo de forma correcta al sub-diccionario
             patente = datos["patente"]
-            # Ejecutamos el egreso para que liquide el cobro e impacte las estadísticas
             egresar_vehiculo(patente)
