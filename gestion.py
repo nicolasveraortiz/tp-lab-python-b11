@@ -16,7 +16,10 @@ for i in range(1, CAPACIDAD + 1): # nuestra variable para almacenar los vehiculo
 metricas = {
     "total_atendidos": 0,
     "tiempo_total_permanencia": 0,
-    "acumulador_ganancias": 0
+    "acumulador_ganancias": 0,
+    "total_motos": 0,
+    "total_autos": 0,
+    "total_camionetas": 0
 }
 
 def ingresar_vehiculo():
@@ -96,10 +99,13 @@ def egresar_vehiculo(patente):
     tipo_vehiculo = datos["tipo"]
     if tipo_vehiculo == "Moto": 
         tarifa_aplicada = TARIFA_MOTO
+        metricas["total_motos"] += 1
     elif tipo_vehiculo == "Auto":
         tarifa_aplicada = TARIFA_AUTO
+        metricas["total_autos"] +=1
     else: 
         tarifa_aplicada = TARIFA_CAMIONETA 
+        metricas["total_camionetas"] +=1
     importe = horas_a_cobrar * tarifa_aplicada 
     metricas["acumulador_ganancias"] += importe
     metricas["total_atendidos"] += 1
